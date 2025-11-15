@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         YouTube Cosmetic US Mode (Hide Region Label)
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2
-// @description  Hides YouTube's country code to mimic the US version (no "PH", "IN", etc. shown).
+// @version      1.0.3
+// @description  Hides YouTube's country code everywhere (topbar + sidebar) to mimic US version.
 // @author       Zappingsbrew & ChatGPT (GPT-5)
 // @match        https://www.youtube.com/*
 // @icon         https://github.com/twitter/twemoji/blob/master/assets/72x72/1f1fa-1f1f8.png?raw=true
@@ -14,19 +14,19 @@
 
 /*!
  * MIT License
- * 
+ *
  * Copyright (c) 2025 zappingsbrew
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,16 +36,19 @@
  * SOFTWARE.
  */
 
+
 (function () {
-  'use strict';
+    'use strict';
 
-  function hideCountryCode() {
-    const el = document.querySelector('span#country-code');
-    if (el && el.style.display !== 'none') {
-      el.style.display = 'none';
+    function hideCountryCodes() {
+        const countrySpans = document.querySelectorAll('span#country-code');
+        countrySpans.forEach(el => {
+            if (el.style.display !== 'none') {
+                el.style.display = 'none';
+            }
+        });
     }
-  }
 
-  hideCountryCode();
-  new MutationObserver(hideCountryCode).observe(document.body, { childList: true, subtree: true });
+    hideCountryCodes();
+    new MutationObserver(hideCountryCodes).observe(document.body, { childList: true, subtree: true });
 })();
